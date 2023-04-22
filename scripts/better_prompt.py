@@ -101,6 +101,7 @@ PROMPT_PARSER = lark.Lark(r"""
   %ignore WS
 """)
 
+git = "git"
 available_versions: List[str] = []
 available_localization: List[str] = []
 localization_dict: Dict[str, str] = {}
@@ -156,10 +157,6 @@ def filter_none_fields(obj: Any) -> Any:
 
 
 def on_app_started(demo: Optional[gr.Blocks], app: FastAPI) -> None:
-    @app.get("/better-prompt-api/v1/get-localization")
-    async def get_localization(request: Request):
-        return JSONResponse(content=localization_dict)
-
     @app.get("/better-prompt-api/v1/get-danbooru-tags")
     async def all_danbooru_tag(request: Request):
         if DANBOORU_TAGS_JSON_ZH_CN.is_file():

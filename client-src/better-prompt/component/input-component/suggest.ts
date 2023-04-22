@@ -1,5 +1,5 @@
 import type { Direction2D } from "@/libs/dom";
-import type { ExtraNetworksData, ExtraNetworksType } from "@/better-prompt";
+import type { ExtraNetworksData } from "@/better-prompt";
 import type { FilterType } from "./filter";
 import {
   addClasses,
@@ -10,7 +10,7 @@ import {
   removeClasses,
 } from "@/libs/dom";
 import { dispatchEvent } from "@/libs/webui";
-import { showPopupBelow } from "@/libs/popup";
+import { closePopupById, showPopupBelow } from "@/libs/popup";
 import { getExtraNetworksDataFuse, getDanbooruTagFuse } from "@/better-prompt";
 import { createExtraNetworksItem, createPlainItem, parsePromptItem } from "../promptItem";
 import { appendPromptItem } from "../prompt-component/promptList";
@@ -168,7 +168,7 @@ function updateSuggest(
   if (withinLimit() && isNotFiltered("textual-inversion")) {
     const fuse = getExtraNetworksDataFuse(tabName, "textual-inversion");
     fuse.search(keyword, { limit: limit - count }).forEach((result) => {
-      results.appendChild(createExtraNetworksButton(tabName, "textual-inversion", result.item));
+      results.appendChild(createExtraNetworksButton(tabName, result.item));
       count++;
     });
   }
@@ -176,7 +176,7 @@ function updateSuggest(
   if (withinLimit() && isNotFiltered("lora")) {
     const fuse = getExtraNetworksDataFuse(tabName, "lora");
     fuse.search(keyword, { limit: limit - count }).forEach((value) => {
-      results.appendChild(createExtraNetworksButton(tabName, "lora", value.item));
+      results.appendChild(createExtraNetworksButton(tabName, value.item));
       count++;
     });
   }
@@ -208,38 +208,67 @@ function updateSuggest(
 
 function createExtraNetworksButton(
   tabName: PromptAvailableTab,
-  type: ExtraNetworksType,
   data: ExtraNetworksData
 ): HTMLElement {
+  const { type, name, thumbnail } = data;
+
   const button = document.createElement("button");
   button.classList.add("prompt-item");
   button.dataset.type = "extranetworks";
   button.dataset.subtype = type;
-  button.textContent = data.name;
+  button.textContent = name;
+
+  const createThumbnailPreview = () => {
+    const thumbnailPreview = document.createElement("div");
+    thumbnailPreview.classList.add("thumbnail-preview", "extra-network-cards");
+
+    const card = document.createElement("div");
+    card.classList.add("card");
+    if (thumbnail != null) {
+      card.style.backgroundImage = thumbnail;
+    }
+
+    if (type === "lora") {
+      const metadataButton = document.createElement("div");
+      metadataButton.classList.add("metadata-button");
+      metadataButton.addEventListener("click", (event) => {
+        extraNetworksRequestMetadata(event, type, name);
+      });
+      card.appendChild(metadataButton);
+    }
+
+    thumbnailPreview.appendChild(card);
+    return thumbnailPreview;
+  };
 
   button.addEventListener("click", (event) => {
     if (event.button === 0) {
       appendPromptItem(tabName, !event.shiftKey, createExtraNetworksItem(type, data));
     }
   });
+
   const popupId = `thumbnail-preview-${nanoid()}`;
+  button.addEventListener("mousedown", (event) => {
+    if (event.button !== 0) return;
+    closePopupById(popupId);
+  });
   button.addEventListener("contextmenu", (event) => {
-    showPopupBelow(button, {
-      id: popupId,
-      contentFactory: () => {
-        event.preventDefault();
-        const popup = document.createElement("div");
-        popup.classList.add("thumbnail-preview", "extra-network-cards");
-        const image = document.createElement("div");
-        image.classList.add("card");
-        if (data.thumbnail != null) {
-          image.style.backgroundImage = data.thumbnail;
-        }
-        popup.appendChild(image);
-        return popup;
-      },
-      groupToClose: "thumbnail-preview",
-    });
+    const preventDefault = () => {
+      if (event.ctrlKey) return; // For debug. When ctrl key pressed, context menu is displayed.
+      event.preventDefault();
+    };
+    if (closePopupById(popupId)) {
+      preventDefault();
+    } else {
+      showPopupBelow(button, {
+        id: popupId,
+        groupToClose: "thumbnail-preview",
+        contentFactory: () => {
+          preventDefault();
+          return createThumbnailPreview();
+        },
+      });
+    }
   });
   return button;
 }

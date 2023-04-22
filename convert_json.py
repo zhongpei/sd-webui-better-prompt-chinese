@@ -24,7 +24,7 @@ def load_translate(input_path):
 
 
 class TranslateWithCache(object):
-    CACHE_FILE = "./data/translate_cache.json"
+    CACHE_FILE = "./data/translate_cache_character.json"
 
     def __init__(self, enable_google_translate=True):
         if not os.path.exists(self.CACHE_FILE):
@@ -36,6 +36,7 @@ class TranslateWithCache(object):
         print(googletrans.LANGUAGES)
         self.enable_google_translate = enable_google_translate
         self.translator = Translator()
+        self.last_push_count = len(self.cache)
 
     def goole_translate(self, txt, src="en", dest="zh-cn"):
         if not self.enable_google_translate:
@@ -57,8 +58,10 @@ class TranslateWithCache(object):
         return result
 
     def push(self):
-        with open(self.CACHE_FILE, "w+", encoding="UTF-8") as f:
-            f.write(json.dumps(self.cache, ensure_ascii=False, indent=4))
+        if len(self.cache) > self.last_push_count:
+            with open(self.CACHE_FILE, "w+", encoding="UTF-8") as f:
+                f.write(json.dumps(self.cache, ensure_ascii=False, indent=4))
+                self.last_push_count = len(self.cache)
 
 
 def translate_json():
@@ -74,7 +77,7 @@ def translate_json():
             tag["zh_cn"] = en2zh[tag_name]
         elif tag_name in en2zh:
             tag["zh_cn"] = en2zh[tag_name]
-        elif tag["category"] == 0:
+        elif tag["category"] == 3:
             text = translator.translate(tag_name, src="en", dest="zh-cn")
             print(f"Translated {tag['name']} -> {text}")
             count += 1
