@@ -58,7 +58,7 @@ Better Prompt は、下の画像の赤線で囲まれた部分を追加します
 <img src="docs/images/components.png" alt="Image - Components" />
 </figure>
 
-## Prompt Addition Form <span id="input-form"></span>
+## 即時追加フォーム<span id="input-form"></span>
 
 プロンプトを追加するには、次の 3 つの要素を使用します。
 画像。
@@ -124,7 +124,7 @@ alt="Image - Prompt Component" />
 Web UI の。
 
 各プロンプトは、ドラッグ アンド ドロップで並べ替えたり、削除することができます。
-Shiftキーを押しながらクリック。
+Shift キーを押しながらクリックします。
 
 LoRA と通常のプロンプトを右クリックすると、調整用のポップアップが表示されます
 強調レベル。
@@ -204,7 +204,7 @@ Better Prompt で使用する言語を指定します。デフォルト値は空
 
 -   「」LoRA ブロック ウェイトのサポート
 
--   「」他のエクストラネットワークをサポート
+-   「」 Support other Extra networks
 
 -   「」ネストされたプロンプトをサポート
 
