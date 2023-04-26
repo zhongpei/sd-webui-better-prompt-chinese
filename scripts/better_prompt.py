@@ -183,8 +183,30 @@ def on_app_started(demo: Optional[gr.Blocks], app: FastAPI) -> None:
 
 script_callbacks.on_app_started(on_app_started)
 
+current_model = None
+
+
+def change_model():
+    from .generator import models as prompt_models
+    global current_model
+    if shared.opts.better_prompt_model != current_model:
+        prompt_models.unload()
+    current_model = shared.opts.better_prompt_model
+
 
 def on_ui_settings():
+    shared.opts.add_option(
+        "better_prompt_model",
+        shared.OptionInfo("none", _("Generator Model of Better Prompt"), gr.Dropdown,
+                          lambda: {"choices": ["none", "microsoft/Promptist",
+                                               "Ar4ikov/gpt2-650k-stable-diffusion-prompt-generator"]},
+                          onchange=change_model, section=SETTINGS_SECTION)
+    )
+    shared.opts.add_option(
+        "better_prompt_model_device",
+        shared.OptionInfo("cpu", _("Display update notifications"), gr.Radio,
+                          lambda: {"choices": ["cpu", "cuda", "mps"]}, section=SETTINGS_SECTION)
+    )
     shared.opts.add_option(
         "better_prompt_localization",
         shared.OptionInfo(
@@ -192,7 +214,7 @@ def on_ui_settings():
             lambda: {"choices": available_localization},
             refresh=refresh_available_localization, section=SETTINGS_SECTION
         )
-    ),
+    )
 
 
 script_callbacks.on_ui_settings(on_ui_settings)
