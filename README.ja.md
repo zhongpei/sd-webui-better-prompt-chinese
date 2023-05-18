@@ -135,8 +135,8 @@ LoRAを追加できない以外は同じです[「ポジティブプロンプト
 
 # 構成
 
-Better Prompt creates its own configuration section in the Settings tab.
-Here, we will explain each item.
+Better Prompt は、\[設定] タブに独自の構成セクションを作成します。
+ここでは各項目について説明していきます。
 
 <figure>
 <img src="docs/images/settings.png" alt="Image - Settings" />
@@ -194,7 +194,7 @@ Better Prompt で使用する言語を指定します。デフォルト値は空
 
 # やることリスト
 
--   「]プロンプトのエイリアスを設定する機能を追加
+-   「」プロンプトのエイリアスを設定する機能を追加
 
 -   「」プロンプトマージ機能に追加
 
@@ -215,4 +215,4 @@ Better Prompt で使用する言語を指定します。デフォルト値は空
 Better Prompt は MIT ライセンスに基づいて開発および公開されています。ために
 ライセンスの詳細については、以下のリンクを参照してください。
 
-[私のライセンス](./LICENSE)
+[MIT License](./LICENSE)
