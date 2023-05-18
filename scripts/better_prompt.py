@@ -166,7 +166,7 @@ def on_app_started(demo: Optional[gr.Blocks], app: FastAPI) -> None:
 
     @app.get("/better-prompt-api/v1/enable_suggest")
     async def enable_suggest(request: Request):
-        return JSONResponse(content={"enable_suggest": shared.opts.enable_suggest == "true"})
+        return JSONResponse(content={shared.opts.enable_suggest == "true"})
 
     @app.post("/better-prompt-api/v1/parse-prompt")
     async def parse_prompt(request: Request):
