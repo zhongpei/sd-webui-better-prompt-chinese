@@ -91,8 +91,8 @@ Enter (または Shift + Enter) を押します。
 
 ### 「３」エリアを提案する<span id="suggest"></span>
 
-入力した内容に類似した要素を最大 20 個リスト表示します。[「入力フィールド」](#input-field). An example of the items to be added is
-shown in the following image.
+入力した内容に類似した要素を最大 20 個リスト表示します。[「入力フィールド」](#input-field)。追加される項目の一例は、
+次の図に示されています。
 
 <figure>
 <img src="docs/images/suggest-items.png" alt="Image - Suggest Items" />
@@ -124,7 +124,7 @@ alt="Image - Prompt Component" />
 Web UIの。
 
 各プロンプトはドラッグ アンド ドロップで並べ替えたり、削除したりできます。
-Shift キーを押しながらクリックします。
+Shiftキーを押しながらクリックします。
 
 LoRA と通常のプロンプトを右クリックすると、調整用のポップアップが表示されます
 強調レベル。
@@ -196,7 +196,7 @@ Better Prompt で使用する言語を指定します。デフォルト値は空
 
 -   「」プロンプトのエイリアスを設定する機能を追加
 
--   \[」プロンプトマージ機能に追加
+-   「」プロンプトマージ機能に追加
 
 -   「」最後に追加したプロンプトを元に戻すことを許可します。「Ctrl + Z」
 
