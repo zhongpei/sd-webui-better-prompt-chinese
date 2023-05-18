@@ -161,7 +161,7 @@ function updateSuggest(
 
   removeAllChild(results);
 
-  const limit = 20;
+  const limit = 40;
   let count = 0;
   const withinLimit = () => count < limit;
 

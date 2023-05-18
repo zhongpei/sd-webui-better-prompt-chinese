@@ -2,7 +2,7 @@ import { _ } from "@/libs/webui";
 import { createTextInput } from "../../common/forms";
 import { createFilterComponents } from "./filter";
 import { createSuggestComponent } from "./suggest";
-
+import { enableSuggest  } from "./libs/api";
 export function createInputComponent(tabName: PromptAvailableTab): HTMLElement {
   const container = document.createElement("div");
   container.classList.add("prompt-input");
@@ -14,9 +14,14 @@ export function createInputComponent(tabName: PromptAvailableTab): HTMLElement {
 
   const filter = createFilterComponents();
   container.appendChild(filter);
+  fetchDanbooruTags = enableSuggest().then((value) => {
+    if(value){
+        const suggest = createSuggestComponent(tabName, input, filter);
+    container.appendChild(suggest);
+    }
 
-  const suggest = createSuggestComponent(tabName, input, filter);
-  container.appendChild(suggest);
+  });
+
 
   return container;
 }

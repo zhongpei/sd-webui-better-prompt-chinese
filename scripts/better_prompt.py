@@ -164,19 +164,23 @@ def on_app_started(demo: Optional[gr.Blocks], app: FastAPI) -> None:
             return FileResponse(path=DANBOORU_TAGS_JSON_ZH_CN, media_type="application/json")
         return JSONResponse(content=[])
 
+    @app.get("/better-prompt-api/v1/enable_suggest")
+    async def enable_suggest(request: Request):
+        return JSONResponse(content={"enable_suggest": shared.opts.enable_suggest == "true"})
+
     @app.post("/better-prompt-api/v1/parse-prompt")
     async def parse_prompt(request: Request):
         body = (await request.body()).decode("utf-8")
         try:
             json_data = TreeToJson().transform(PROMPT_PARSER.parse(body))
-            print(json_data)
+            # print(json_data)
             if isinstance(json_data, list):
                 return JSONResponse(content=json_data)
             return JSONResponse(content=[])
         except Exception as e:
-            print(body, e)
-            import traceback
-            traceback.print_exc()
+            # print(body, e)
+            # import traceback
+            # traceback.print_exc()
 
             return JSONResponse(content=[])
 
@@ -191,6 +195,12 @@ def on_ui_settings():
             "", _("Language of Better Prompt (requires reload UI)"), gr.Dropdown,
             lambda: {"choices": available_localization},
             refresh=refresh_available_localization, section=SETTINGS_SECTION
+        ),
+        shared.OptionInfo(
+            "better_prompt_enable_suggest",
+            "false", "enable_suggest", gr.Radio,
+            lambda: {"choices": ["true", "false"]},
+            section=SETTINGS_SECTION
         )
     ),
 
