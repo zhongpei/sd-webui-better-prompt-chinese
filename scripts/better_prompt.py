@@ -192,7 +192,7 @@ def on_ui_settings():
     shared.opts.add_option(
         "better_prompt_localization",
         shared.OptionInfo(
-            "", _("Language of Better Prompt (requires reload UI)"), gr.Dropdown,
+            "zh_CN", _("Language of Better Prompt (requires reload UI)"), gr.Dropdown,
             lambda: {"choices": available_localization},
             refresh=refresh_available_localization, section=SETTINGS_SECTION
         ),
@@ -201,7 +201,7 @@ def on_ui_settings():
     shared.opts.add_option(
         "better_prompt_enable_suggest",
         shared.OptionInfo(
-            "false", "enable_suggest", gr.Radio,
+            "false", _("Enable Prompt (requires reload UI)"), gr.Radio,
             lambda: {"choices": ["true", "false"]},
             section=SETTINGS_SECTION
         )

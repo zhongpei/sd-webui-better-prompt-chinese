@@ -7,5 +7,6 @@
   "Multiplier": "乘数",
   "Input prompt...": "输入 prompt...",
   "LoRA cannot be add to negative prompt": "LoRA不能添加到否定提示中",
-  "Better Prompt version {0} is available": "Better Prompt 版本 {0} 可使用"
+  "Better Prompt version {0} is available": "Better Prompt 版本 {0} 可使用",
+  "Enable Prompt (requires reload UI)": "启用Prompt框（需重启Web UI）"
 }
