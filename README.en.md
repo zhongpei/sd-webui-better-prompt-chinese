@@ -208,7 +208,7 @@ settings, it is necessary to reload the Web UI.
 
 -   \[]Support nested prompts
 
--   \[]Support schedule notation (e.g.\[red:green:0.5])
+-   \[] Support schedule notation (e.g. \[red:green:0.5])
 
 # License
 
