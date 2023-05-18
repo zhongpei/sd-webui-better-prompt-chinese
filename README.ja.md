@@ -215,4 +215,4 @@ Better Prompt で使用する言語を指定します。デフォルト値は空
 Better Prompt は MIT ライセンスに基づいて開発および公開されています。ために
 ライセンスの詳細については、以下のリンクを参照してください。
 
-[MIT License](./LICENSE)
+[私のライセンス](./LICENSE)
