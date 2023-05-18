@@ -196,13 +196,16 @@ def on_ui_settings():
             lambda: {"choices": available_localization},
             refresh=refresh_available_localization, section=SETTINGS_SECTION
         ),
+
+    )
+    shared.opts.add_option(
+        "better_prompt_enable_suggest",
         shared.OptionInfo(
-            "better_prompt_enable_suggest",
             "false", "enable_suggest", gr.Radio,
             lambda: {"choices": ["true", "false"]},
             section=SETTINGS_SECTION
         )
-    ),
+    )
 
 
 script_callbacks.on_ui_settings(on_ui_settings)
